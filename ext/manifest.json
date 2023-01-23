@@ -1,0 +1,16 @@
+{
+    "name": "Bookmarks Reminder",
+    "description": "Reminds you to check your bookmarks",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "index.html",
+      "default_title": "Open the popup"
+    },
+    "permissions": [
+      "activeTab"
+    ],
+    "icons": {
+      "128": "icon128.png"
+    }
+}
