@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 function App() {
   const [currentUrl, setCurrentUrl] = useState<string | undefined>("");
   const [date, setDate] = useState<string>("");
+  const [error, setError] = useState<string | undefined>("");
 
   useEffect(() => {
     const queryInfo = { active: true, lastFocusedWindow: true };
@@ -49,14 +50,34 @@ function App() {
     };
   };
 
+  // save reminder to IndexedDB
   const saveReminder = () => {
+    setError("")
+    const id = Math.floor(Math.random() * 10000000) + 1000;
+    if(!date) {
+      setError("Please select a date")
+      return
+    }
     addElement("notificationsStore", {
-      uuid: Math.floor(Math.random() * 10000000) + 1000,
+      uuid: id,
       url: currentUrl,
       reminderDate: new Date(date).toDateString(),
       createdAt: new Date().toISOString(),
       site: new URL(currentUrl!).hostname,
     });
+    // send notification
+    chrome.notifications.create(`${id}`, {
+      type: "basic",
+      iconUrl: "icon128.png",
+      title: "BookMark Reminder",
+      message: `Your bookmark reminder for ${currentUrl?.slice(
+        0,
+        20
+      )}... is set for ${date}`,
+      priority: 2,
+      requireInteraction: true,
+    });
+    window.close(); // close the popup
   };
   return (
     <div
@@ -72,12 +93,15 @@ function App() {
       }}
     >
       <h1 style={{ fontSize: "1.2em" }}>Bookmarks Reminder</h1>
-      <h2 style={{ fontSize: "1.1em", width: "80%", textAlign: "center" }}>Current URL: {currentUrl}</h2>
+      <h2 style={{ fontSize: "1.1em", width: "80%", textAlign: "center" }}>
+        Current URL: {currentUrl}
+      </h2>
       <input
         type="date"
         onChange={(e) => setDate(e.target.value)}
         placeholder="When?"
       />
+      {(error && !date) && <p style={{fontSize: ".9em", marginTop: ".5em", color: "red"}}>{error}</p>}
       <button
         onClick={saveReminder}
         style={{
@@ -98,7 +122,3 @@ function App() {
 }
 
 export default App;
-
-// TODO: Add a button to save the bookmark to IndexedDB
-// TODO: Add handlers to read the bookmarks from IndexedDB
-// TODO: Send notifications through the background script using the Chrome Notifications API

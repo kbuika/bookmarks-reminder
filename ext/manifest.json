@@ -15,7 +15,8 @@
     ],
     
     "permissions": [
-      "activeTab"
+      "activeTab",
+      "notifications"
     ],
     
     "icons": {
