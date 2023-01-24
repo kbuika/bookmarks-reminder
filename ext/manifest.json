@@ -7,9 +7,17 @@
       "default_popup": "index.html",
       "default_title": "Open the popup"
     },
+    "content_scripts": [
+      {
+        "matches": ["https://*/*", "http://*/*"],
+        "js": ["content/content.js"]
+      }
+    ],
+    
     "permissions": [
       "activeTab"
     ],
+    
     "icons": {
       "128": "icon128.png"
     }
