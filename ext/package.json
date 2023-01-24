@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && set \"INLINE_RUNTIME_CHUNK=false\" vite build && cp manifest.json dist && tsc content.ts --outDir dist/content",
+    "build": "tsc &&  vite build && cp manifest.json dist && tsc content.ts --outDir dist/content",
     "preview": "vite preview"
   },
   "dependencies": {

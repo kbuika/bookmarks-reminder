@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 
 function App() {
   const [currentUrl, setCurrentUrl] = useState<string | undefined>("");
   const [date, setDate] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
     const queryInfo = { active: true, lastFocusedWindow: true };
@@ -17,7 +15,7 @@ function App() {
   }, []);
 
   const keys = {
-    notifications: [{ site: "", id: ""}],
+    notifications: [{ site: "", id: "" }],
   };
   let db!: IDBDatabase;
   const request = indexedDB.open("data", 1);
@@ -55,19 +53,46 @@ function App() {
     addElement("notificationsStore", {
       uuid: Math.floor(Math.random() * 10000000) + 1000,
       url: currentUrl,
-      email: email,
-      reminderDate: new Date(date).toISOString(),
+      reminderDate: new Date(date).toDateString(),
       createdAt: new Date().toISOString(),
       site: new URL(currentUrl!).hostname,
     });
   };
   return (
-    <div className="App">
-      <h1>Bookmarks Reminder</h1>
-      <h2>Current URL: {currentUrl}</h2>
-      <input type="date" onChange={(e) => setDate(e.target.value)} />
-      <input type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)}/>
-      <button onClick={saveReminder}>Remind Me</button>
+    <div
+      style={{
+        display: "flex",
+        flexFlow: "column nowrap",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2em",
+        height: "auto",
+        width: "30em",
+        borderRadius: "8px",
+      }}
+    >
+      <h1 style={{ fontSize: "1.2em" }}>Bookmarks Reminder</h1>
+      <h2 style={{ fontSize: "1.1em", width: "80%", textAlign: "center" }}>Current URL: {currentUrl}</h2>
+      <input
+        type="date"
+        onChange={(e) => setDate(e.target.value)}
+        placeholder="When?"
+      />
+      <button
+        onClick={saveReminder}
+        style={{
+          height: "auto",
+          padding: ".5em",
+          backgroundColor: "blue",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          marginTop: "1em",
+          cursor: "pointer",
+        }}
+      >
+        Remind Me
+      </button>
     </div>
   );
 }
