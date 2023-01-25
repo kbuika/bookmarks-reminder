@@ -1,11 +1,27 @@
 # bookmarks-reminder
 I saw an interesting article on a Monday, I wanted to read through and take some notes, so I bookmarked it and promised myself I would read it that Wednesday. 4 months later, I idly open my bookmarks tab and I see the link to that article. Crap! I forgot about this. This is to help me reduce the ``Crap! I forgot about this`` moments.
 
+<hr />
+
+### Current Implementation (Crude)
+
+``` mermaid
+sequenceDiagram
+
+PopUp (React) ->> IndexedDB: Notification Data
+
+Background Script ->> IndexedDB: Read Data and create alarms
+
+```
+
+
 ## Getting Started
 You will need to install [Vite](https://vitejs.dev/) if you don't have it already
 
+To Install
 ``` yarn install ``` or ``` npm install ```
 
+To build
 ``` yarn run build ``` or ``` npm run build ```
 
 > The build command generates a /dist directory and this is the directory that is deployed as the Chrome Extension
@@ -36,16 +52,7 @@ Once the /dist directory is generated,
 - [ ] Rethink the data storage and logic (Supabase and Edge Functions for "out-of-chrome" notifications)
 
 
-### Current Implementation (Crude)
 
-``` mermaid
-sequenceDiagram
-
-PopUp (React) ->> IndexedDB: Notification Data
-
-Background Script ->> IndexedDB: Read Data and create alarms
-
-```
 
 
 
