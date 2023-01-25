@@ -36,5 +36,18 @@ Once the /dist directory is generated,
 - [ ] Rethink the data storage and logic (Supabase and Edge Functions for "out-of-chrome" notifications)
 
 
+### Current Implementation (Crude)
+
+``` mermaid
+sequenceDiagram
+
+PopUp (React) ->> IndexedDB: Notification Data
+
+Background Script ->> IndexedDB: Read Data and create alarms
+
+```
+
+
+
 
 
